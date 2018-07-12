@@ -1,0 +1,6 @@
+proxy {$FROM} {$TO} {
+  host {$CADDY_HOST}
+  tls ${CERT_EMAIL} {
+    ca {$CA_URI}
+  }
+}
