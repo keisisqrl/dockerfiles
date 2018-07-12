@@ -12,4 +12,6 @@ RUN apk add --no-cache curl s6 ca-certificates
 
 VOLUME /caddy-data
 
-CMD ["caddy","-conf=/caddy-data/Caddyfile","-type=net"]
+ADD Caddyfile /
+
+CMD ["caddy","-conf=/Caddyfile","-type=net"]
