@@ -1,17 +1,16 @@
-FROM alpine:3.6
+FROM alpine:3.6 AS download
 
-ENV CADDYPATH /caddy-data
-ENV CA_URI https://acme-staging.api.letsencrypt.org/directory
+
 
 RUN apk add --no-cache curl s6 ca-certificates 
     && curl -L 'https://caddyserver.com/download/linux/amd64?plugins=net&license=personal&telemetry=on' \
     | tar xzf - caddy \
-    && chmod +x caddy \
-    && mv caddy /usr/bin \
-    && apk del curl
+    && chmod +x caddy 
 
-VOLUME /caddy-data
+FROM scratch
 
-ADD Caddyfile /
+COPY --from=download /caddy /caddy
 
-CMD ["caddy","-conf=/Caddyfile","-type=net"]
+ENV CA_URI https://acme-staging.api.letsencrypt.org/directory
+
+ENTRYPOINT ["/caddy","-conf=/Caddyfile","-type=net"]
