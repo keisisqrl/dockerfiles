@@ -2,9 +2,9 @@ FROM alpine:3.6 AS download
 
 
 
-RUN apk add --no-cache curl s6 ca-certificates 
+RUN apk add --no-cache curl s6 ca-certificates \
     && curl -L 'https://caddyserver.com/download/linux/amd64?plugins=net&license=personal&telemetry=on' \
-    | tar xzf - caddy \
+    | tar xzf - caddy \ 
     && chmod +x caddy 
 
 FROM scratch
